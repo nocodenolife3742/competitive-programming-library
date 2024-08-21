@@ -1,4 +1,5 @@
-vector<int> z_value(const string &s) {
+template<typename T>
+vector<int> z_value(T &s) {
     vector<int> z(s.size());
     for (int i = 1, l = 0, r = 0; i < s.size(); i++) {
         if (i < r) z[i] = min(r - i, z[i - l]);
