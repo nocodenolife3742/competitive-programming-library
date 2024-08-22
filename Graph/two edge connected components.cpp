@@ -1,24 +1,24 @@
-vector<vector<int> > bcc(const vector<vector<int> > &adj) {
-    int n = adj.size();
-    vector<int> pos(n, -1), stk;
+vector<vector<int> > becc(vector<vector<int> > &adj) {
+    int n = adj.size(), t = 0;
+    vector<int> dfn(n), low(n), stk;
     vector<vector<int> > res;
-    function<int(int, int)> dfs = [&](int u, int p) {
-        int low = pos[u] = stk.size(), mul = 0;
+    function<void(int, int)> dfs = [&](int u, int p) {
+        dfn[u] = low[u] = ++t;
         stk.push_back(u);
         for (int v: adj[u]) {
-            if (~pos[v]) {
-                if (v != p || mul) low = min(low, pos[v]);
-                else mul = 1;
+            if (v == p) { p = -1; continue; }
+            if (dfn[v]) {
+                low[u] = min(low[u], dfn[v]);
                 continue;
             }
-            low = min(low, dfs(v, u));
+            dfs(v, u), low[u] = min(low[u], low[v]);
         }
-        if (low == pos[u]) {
-            res.emplace_back(stk.begin() + low, stk.end());
-            stk.resize(low);
+        if (low[u] == dfn[u]) {
+            res.push_back({});
+            for (int w = -1; w != u; stk.pop_back())
+                res.back().push_back(w = stk.back());
         }
-        return low;
     };
-    for (int i = 0; i < n; i++) if (!~pos[i]) dfs(i, -1);
+    for (int i = 0; i < n; i++) if (!dfn[i]) dfs(i, -1);
     return res;
 }
