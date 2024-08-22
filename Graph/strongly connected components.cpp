@@ -1,4 +1,4 @@
-vector<vector<int> > scc(const vector<vector<int> > &adj) {
+vector<vector<int> > scc(vector<vector<int> > &adj) {
     int n = adj.size();
     vector<int> pos(n, -1), vis(n), stk;
     vector<vector<int> > res;
