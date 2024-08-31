@@ -36,11 +36,22 @@ struct hld {
 
     int lca(int u, int v) {
         while (top[u] != top[v]) {
-            if (dep[top[u]] > dep[top[v]])
-                u = par[top[u]];
-            else
-                v = par[top[v]];
+            if (dep[top[u]] < dep[top[v]]) swap(u, v);
+            u = par[top[u]];
         }
         return dep[u] > dep[v] ? v : u;
+    }
+
+    vector<pair<int, int> > find_path(int u, int v) {
+        vector<pair<int, int> > l, r;
+        while (top[u] != top[v]) {
+            if (dep[top[u]] > dep[top[v]])
+                l.emplace_back(u, top[u]), u = par[top[u]];
+            else
+                r.emplace_back(top[v], v), v = par[top[v]];
+        }
+        l.emplace_back(u, v);
+        l.insert(l.end(), r.rbegin(), r.rend());
+        return l;
     }
 };
