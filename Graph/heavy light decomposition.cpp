@@ -1,9 +1,9 @@
 struct hld {
     vector<vector<int> > adj;
-    vector<int> dep, par, top, pos, hvy;
+    vector<int> dep, top, pos, par, hvy, sz;
 
-    hld(int n) : dep(n), par(n), top(n), pos(n), hvy(n, -1) {
-        adj.assign(n, {});
+    hld(int n) : adj(n), par(n, -1), hvy(n, -1), sz(n, 1) {
+        dep = top = pos = vector<int>(n);
     }
 
     void add_edge(int u, int v) {
@@ -12,16 +12,14 @@ struct hld {
     }
 
     void build(int root = 0) {
-        function<int(int)> init = [&](int u) {
-            int sz = 1, mx = -1;
-            for (int v: adj[u]) {
+        function<void(int)> init = [&](int u) {
+            for (int &v: adj[u]) {
                 if (v == par[u]) continue;
                 par[v] = u, dep[v] = dep[u] + 1;
-                int csz = init(v);
-                sz += csz;
-                if (csz > mx) mx = csz, hvy[u] = v;
+                init(v), sz[u] += sz[v];
+                if (!~hvy[u] || sz[v] > sz[hvy[u]])
+                    hvy[u] = v;
             }
-            return sz;
         };
         int t = 0;
         function<void(int, int)> sep = [&](int u, int h) {
