@@ -49,7 +49,6 @@ struct hld {
                 r.emplace_back(top[v], v), v = par[top[v]];
         }
         l.emplace_back(u, v);
-        l.insert(l.end(), r.rbegin(), r.rend());
-        return l;
+        return l.insert(l.end(), r.rbegin(), r.rend()), l;
     }
 };
