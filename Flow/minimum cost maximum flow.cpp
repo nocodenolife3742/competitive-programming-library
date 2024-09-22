@@ -1,5 +1,5 @@
 template<typename T, typename C>
-struct mcf {
+struct mcmf {
     struct edge {
         int u, v;
         T cap, flow = 0;
@@ -15,7 +15,7 @@ struct mcf {
     vector<int> par;
     const C INF = numeric_limits<C>::max();
 
-    mcf(int n) : n(n), adj(n), dis(n), pot(n), par(n) {}
+    mcmf(int n) : n(n), adj(n), dis(n), pot(n), par(n) {}
 
     void add_edge(int u, int v, T cap, C cost) {
         adj[u].push_back(e.size());
