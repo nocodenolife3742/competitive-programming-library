@@ -45,13 +45,13 @@ struct mcmf {
         return dis[t] != INF;
     }
 
-    pair<T, C> flow(int s, int t) {
+    pair<T, C> flow(int s, int t, T lim = numeric_limits<T>::max()) {
         T flow = 0;
         C cost = 0;
-        while (dijkstra(s, t)) {
+        while (dijkstra(s, t) && lim - flow > 0) {
             for (int i = 0; i < n; i++)
                 if (dis[i] < INF) pot[i] += dis[i];
-            T d = numeric_limits<T>::max();
+            T d = lim - flow;
             for (int u = t; u != s; u = e[par[u]].u)
                 d = min(d, e[par[u]].cap - e[par[u]].flow);
             for (int u = t; u != s; u = e[par[u]].u) {
