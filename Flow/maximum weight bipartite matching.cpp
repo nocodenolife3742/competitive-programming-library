@@ -1,5 +1,5 @@
 template<typename T>
-pair<T, vector<int> > hungarian(const vector<vector<int> > &a) {
+pair<T, vector<int> > hungarian(const vector<vector<T> > &a) {
     if (a.empty()) return {0, {}};
     int n = a.size() + 1, m = a[0].size() + 1;
     vector<int> p(m), ans(n - 1);
