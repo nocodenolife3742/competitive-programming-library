@@ -1,5 +1,4 @@
-template<typename V, V (*f)(V, V), typename T,
-    V (*mp)(T, V), T (*c)(T, T), T (*te)()>
+template<typename V, V (*f)(V, V), typename T, V (*mp)(T, V), T (*c)(T, T), T (*te)()>
 struct segtree {
     struct node {
         V val;
